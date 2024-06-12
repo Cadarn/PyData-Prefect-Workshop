@@ -1,0 +1,11 @@
+prefect==2.19.4
+httpx==0.26.0
+kafka-python-ng==2.2.2
+pymongo==4.7.3
+pandas==2.2.0
+numpy==1.26.3
+dask==2024.5.2
+spacy==3.7.2
+spacytextblob==4.0.0
+nltk==3.8.1
+streamlit==1.
