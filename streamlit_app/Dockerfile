@@ -17,6 +17,8 @@ COPY requirements.txt .
 # Install the required Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install pymongo
+
 # Copy the FastAPI app files
 COPY app.py .
 COPY Tweets.csv Tweets.csv

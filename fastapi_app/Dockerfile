@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the FastAPI app files
 COPY main.py .
-COPY data/airline_tweets.csv data/airline_tweets.csv
+COPY data/airline_tweets.csv /app/data/airline_tweets.csv
 
 # Expose the port the app runs on
 EXPOSE 8000

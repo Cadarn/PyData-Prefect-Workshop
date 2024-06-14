@@ -1,3 +1,3 @@
-MONGO_URI = "mongodb://localhost:27017"
-DB_NAME = "astronomy"
-COLLECTION_NAME = "ATels"
+MONGO_URI = "mongodb+srv://username:password@prefect-tutorial.blah.mongodb.net/?retryWrites=true&w=majority&appName=Prefect-tutorial"
+DB_NAME = "Prefect-tutorial"
+

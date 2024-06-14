@@ -1,9 +1,6 @@
-from pathlib import Path
+from prefect import task, flow, get_run_logger
+
 import re
-
-import numpy as np
-import pandas as pd
-
 import spacy
 from spacytextblob.spacytextblob import SpacyTextBlob
 from nltk.stem import WordNetLemmatizer
@@ -13,34 +10,8 @@ nlp.add_pipe("spacytextblob")
 
 wordLemmatizer = WordNetLemmatizer()
 
-DATA_ROOT = Path("./data")
-SENTIMENT_FILE =  "training.1600000.processed.noemoticon.csv"
-AIRLINE_FILE = "airline_tweets.csv"
-
-
-def load_sentiment_tweets(data_path: Path)->pd.DataFrame:
-    """Load data from the 1.6million twitter sentiment dataset"""
-    DATASET_COLUMNS  = ["sentiment", "ids", "date", "flag", "user", "text"]
-    DATASET_ENCODING = "ISO-8859-1"
-    df = pd.read_csv(data_path,
-                     encoding=DATASET_ENCODING , 
-                     names=DATASET_COLUMNS
-                     )
-    return df
-
-def load_airline_tweets(data_path: Path)->pd.DataFrame:
-    """Load data from the airline tweets dataset"""
-    df = pd.read_csv(data_path)
-    return df
-
-
-def calc_sentiment(text: str)->float:
-    """Calculate text sentiment based on the spacytextblob polarity model"""
-    doc = nlp(text)
-    return doc._.blob.polarity
 
 # Text preprocessing
-
 # Defining dictionary containing all emojis with their meanings.
 emojis = {':)': 'smile', ':-)': 'smile', ';d': 'wink', ':-E': 'vampire', ':(': 'sad', 
           ':-(': 'sad', ':-<': 'sad', ':P': 'raspberry', ':O': 'surprised',
@@ -68,6 +39,7 @@ stopwordlist = ['a', 'about', 'above', 'after', 'again', 'ain', 'all', 'am', 'an
              'why', 'will', 'with', 'won', 'y', 'you', "youd","youll", "youre",
              "youve", 'your', 'yours', 'yourself', 'yourselves']
 
+@task(name="Lowercase")
 def lowercase_text(text: str) -> str:
     """
     Convert all characters in the text to lowercase and strip leading/trailing whitespace.
@@ -79,6 +51,7 @@ def lowercase_text(text: str) -> str:
         str: The text converted to lowercase with leading/trailing whitespace removed.
     """
     return text.lower().strip()
+
 
 def strip_url(text: str) -> str:
     """
@@ -94,6 +67,7 @@ def strip_url(text: str) -> str:
     clean_text = re.sub(pattern, 'WEBADDRESS', text)
     return clean_text
 
+
 def strip_user(text: str) -> str:
     """
     Replace user handles (mentions) in the text with the placeholder 'USERHANDLE'.
@@ -107,6 +81,7 @@ def strip_user(text: str) -> str:
     pattern = r'@[^\s]+'
     clean_text = re.sub(pattern, 'USERHANDLE', text)
     return clean_text
+
 
 def replace_emoji(text: str) -> str:
     """
@@ -122,6 +97,7 @@ def replace_emoji(text: str) -> str:
         text = text.replace(emoji, f"{description} EMOJI")
     return text
 
+
 def lemmatize_text(text: str) -> str:
     """
     Lemmatize words in the text.
@@ -135,6 +111,8 @@ def lemmatize_text(text: str) -> str:
     words = [wordLemmatizer.lemmatize(word) for word in text.split()]
     return ' '.join(words)
 
+
+
 def process_text(text: str) -> str:
     """
     Pre-process text for sentiment analysis by converting to lowercase, stripping URLs and user handles, 
@@ -146,28 +124,33 @@ def process_text(text: str) -> str:
     Returns:
         str: The processed text.
     """
-    text = lowercase_text(text)
-    text = strip_url(text)
-    text = strip_user(text)
-    text = replace_emoji(text)
-    text = lemmatize_text(text)
+    logger = get_run_logger()
+    logger.info("%s Cleaning text: ", text)   
+    # TO BE FILLED IN WITH RELEVANT PROCESSING STEPS
+    # MAKE SURE YOU HAVE ADDED APPROPRIATE DECORATORS TO YOUR STEPS
+    # DO YOU WANT TO GIVE THEM NAMES?
+    # FEEL FREE TO EXPERIMENT
+    logger.info(f" Clean text: {text}")
     return text
 
 
+def calc_sentiment(text: str)->float:
+    """Calculate text sentiment based on the spacytextblob polarity model"""
+    doc = nlp(text)
+    return doc._.blob.polarity
 
 
-tweets = load_airline_tweets(DATA_ROOT / AIRLINE_FILE)
-tweets.loc[:, "calc_sentiment"] = tweets.text.map(calc_sentiment)
-print(len(tweets))
-print(tweets.columns)
-print(tweets.sample(1))
-for idx, tweet in tweets.sample(10).iterrows():
-    clean_text = process_text(tweet["text"])
-    doc = nlp(clean_text)
-    print(tweet["text"])
-    print(clean_text)
-    print(idx, tweet["airline_sentiment"], tweet["text"], doc._.blob.polarity)
-    print(40*"=")
-print(tweets.calc_sentiment.describe())
-print(tweets.groupby("airline_sentiment")["calc_sentiment"].describe())
-#print(tweets.groupby("user").agg({"sentiment": "mean", "date": "count"}).sort_values(by="date", ascending=False))
+@flow # EDIT IF YOU WANT
+def sentiment_analysis(text: str) -> float:
+    """Calculate sentiment from cleaned text"""
+    clean_text = process_text(text)
+    sentiment = calc_sentiment(clean_text)
+    print(f"Input text: {text}")
+    print(f"Sentiment score: {sentiment:0.2f}")
+    return sentiment
+
+if __name__ == "__main__":
+    example = """ This is the worst day ever! @AAirlines is completely screwed.
+    :( :( - I am not a happy bunny www.worstdayever.com.
+    """
+    sentiment_analysis(example)
