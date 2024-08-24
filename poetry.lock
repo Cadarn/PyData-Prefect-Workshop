@@ -2848,8 +2848,10 @@ version = "3.0.0rc18"
 description = "Workflow orchestration and management."
 optional = false
 python-versions = ">=3.9"
-files = []
-develop = false
+files = [
+    {file = "prefect-3.0.0rc18-py3-none-any.whl", hash = "sha256:c0710e3a771f4cfc5294a5a15cae40efa403e561d6185acdf4b3896b45f3a75c"},
+    {file = "prefect-3.0.0rc18.tar.gz", hash = "sha256:89ef0b2f409c9c61fe5ff9d9449bb23c780a60df27aedcada59dfae65d1e236a"},
+]
 
 [package.dependencies]
 aiosqlite = ">=0.17.0"
@@ -2885,10 +2887,10 @@ pathspec = ">=0.8.0"
 pendulum = ">=3.0.0,<4"
 prometheus-client = ">=0.20.0"
 pydantic = ">=2.7,<3.0.0"
-pydantic_core = ">=2.12.0,<3.0.0"
-pydantic_extra_types = ">=2.8.2,<3.0.0"
-pydantic_settings = "*"
-python_dateutil = ">=2.8.2,<3.0.0"
+pydantic-core = ">=2.12.0,<3.0.0"
+pydantic-extra-types = ">=2.8.2,<3.0.0"
+pydantic-settings = "*"
+python-dateutil = ">=2.8.2,<3.0.0"
 python-slugify = ">=5.0,<9.0"
 pytz = ">=2021.1,<2025"
 pyyaml = ">=5.4.1,<7.0.0"
@@ -2900,7 +2902,7 @@ sniffio = ">=1.3.0,<2.0.0"
 sqlalchemy = {version = ">=2.0,<3.0.0", extras = ["asyncio"]}
 toml = ">=0.10.0"
 typer = ">=0.12.0,<0.12.2 || >0.12.2,<0.13.0"
-typing_extensions = ">=4.5.0,<5.0.0"
+typing-extensions = ">=4.5.0,<5.0.0"
 ujson = ">=5.8.0,<6.0.0"
 uvicorn = ">=0.14.0,<0.29.0 || >0.29.0"
 websockets = ">=10.4,<13.0"
@@ -2925,12 +2927,6 @@ shell = ["prefect-shell (>=0.3.0rc1)"]
 slack = ["prefect-slack (>=0.3.0rc1)"]
 snowflake = ["prefect-snowflake (>=0.28.0rc1)"]
 sqlalchemy = ["prefect-sqlalchemy (>=0.5.0rc1)"]
-
-[package.source]
-type = "git"
-url = "https://github.com/PrefectHQ/prefect.git"
-reference = "3.0.0rc18"
-resolved_reference = "99428dea5aeb1c62dd1284eab107b462790bd0cc"
 
 [[package]]
 name = "preshed"
@@ -5225,4 +5221,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a0494b51e69388368d23406219b55c6378ad11da1eae0d7020ca3f7a2c3b3a2b"
+content-hash = "13307a86574ec84dfcd166dfd0e48eb4aa6f7f71442bf230fa9565d50ee859ce"
