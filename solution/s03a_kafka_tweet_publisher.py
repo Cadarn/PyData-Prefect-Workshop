@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 import json
 from prefect import task, flow, get_run_logger
 from kafka import KafkaProducer

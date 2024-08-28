@@ -13,7 +13,7 @@ nlp.add_pipe("spacytextblob")
 
 wordLemmatizer = WordNetLemmatizer()
 
-DATA_ROOT = Path("./data")
+DATA_ROOT = Path("../data")
 AIRLINE_FILE = "airline_tweets.csv"
 
 
