@@ -6,8 +6,7 @@ from prefect import task, flow, get_run_logger
 from kafka import KafkaProducer
 import httpx
 
-from config.kafka_config import KAFKA_SERVERS, SASL_MECHANISM, SECURITY_PROTOCOL, SASL_PLAIN_PASSWORD, SASL_PLAIN_USERNAME
-
+from config.kafka_config import KAFKA_SERVERS
 AIRLINE_URL = "http://localhost:8000"
 KAFKA_TOPIC = "raw_airline_tweet"
 
@@ -28,10 +27,6 @@ def publish_to_kafka(json_messages: list[dict], kafka_topic: str):
 
     producer = KafkaProducer(
         bootstrap_servers=KAFKA_SERVERS,
-        sasl_mechanism=SASL_MECHANISM,
-        security_protocol=SECURITY_PROTOCOL,
-        sasl_plain_username=SASL_PLAIN_USERNAME,
-        sasl_plain_password=SASL_PLAIN_PASSWORD,
         value_serializer=lambda v: json.dumps(v).encode('utf-8')
     )
 

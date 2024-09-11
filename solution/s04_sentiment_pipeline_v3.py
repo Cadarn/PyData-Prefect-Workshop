@@ -7,7 +7,8 @@ from kafka import KafkaConsumer
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
-from config.kafka_config import KAFKA_SERVERS, SASL_MECHANISM, SECURITY_PROTOCOL, SASL_PLAIN_PASSWORD, SASL_PLAIN_USERNAME
+from config.kafka_config import KAFKA_SERVERS
+from prefect.blocks.system import Secret
 from config.mongodb_config import MONGO_URI, DB_NAME
 from e02b_sentiment_pipeline_v2 import sentiment_analysis
 
@@ -24,7 +25,8 @@ def get_mongo_db(uri: str = MONGO_URI) -> MongoClient:
     Returns:
         MongoClient: The MongoDB client instance.
     """
-    client = MongoClient(uri, server_api=ServerApi('1'))
+    mongo_uri = Secret.load("mongo-db-uri").get()
+    client = MongoClient(mongo_uri, server_api=ServerApi('1'))
     return client
 
 # DO NOT EDIT
@@ -41,10 +43,6 @@ def get_kafka_consumer(kafka_topic: str) -> KafkaConsumer:
     consumer = KafkaConsumer(
         kafka_topic,
         bootstrap_servers=KAFKA_SERVERS,
-        sasl_mechanism=SASL_MECHANISM,
-        security_protocol=SECURITY_PROTOCOL,
-        sasl_plain_username=SASL_PLAIN_USERNAME,
-        sasl_plain_password=SASL_PLAIN_PASSWORD,
         group_id="PREFECT-DEV",
         auto_offset_reset="earliest",
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
@@ -106,7 +104,7 @@ def consume_airline_tweets(kafka_topic: str = KAFKA_TOPIC_AIRLINES):
         poll_result = consumer.poll(timeout_ms=5000)
         for context, messages in poll_result.items():
             for msg in messages:
-                sentiment_score = sentiment_analysis(msg.value.get("text"))
+                sentiment_score = sentiment_analysis(msg.value.get("text", ""))
                 sentiment_label = label_sentiment(sentiment_score)
                 msg.value.update({"sentiment_score": sentiment_score, "sentiment_label": sentiment_label})
                 write_msg_to_mongo(msg.value, client=client)
