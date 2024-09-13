@@ -37,9 +37,20 @@ services:
     image: wurstmeister/zookeeper:latest
     ports:
       - "2181:2181"
+    networks:
+      - tutorial_network
+    healthcheck:
+      test: echo ruok | nc localhost 2181 | grep imok
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
 
   kafka:
     image: wurstmeister/kafka:latest
+    depends_on:
+      zookeeper:
+        condition: service_healthy
     ports:
       - "9092:9092"
     expose:
@@ -53,6 +64,8 @@ services:
       KAFKA_CREATE_TOPICS: "raw_airline_tweet:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - tutorial_network
 
 networks:
   tutorial_network:
