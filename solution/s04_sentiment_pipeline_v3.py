@@ -13,6 +13,7 @@ from config.mongodb_config import MONGO_URI, DB_NAME
 from e02b_sentiment_pipeline_v2 import sentiment_analysis
 
 KAFKA_TOPIC_AIRLINES = "raw_airline_tweet"
+MONGO_COLLECTION = "sentiment_airline_tweets"
 
 # DO NOT EDIT
 def get_mongo_db(uri: str = MONGO_URI) -> MongoClient:
@@ -25,8 +26,7 @@ def get_mongo_db(uri: str = MONGO_URI) -> MongoClient:
     Returns:
         MongoClient: The MongoDB client instance.
     """
-    mongo_uri = Secret.load("mongo-db-uri").get()
-    client = MongoClient(mongo_uri, server_api=ServerApi('1'))
+    client = MongoClient(uri, server_api=ServerApi('1'))
     return client
 
 # DO NOT EDIT
@@ -61,8 +61,8 @@ def write_msg_to_mongo(record: dict, client: MongoClient) -> None:
     Returns:
         None
     """
-    db = client["Prefect-tutorial"]
-    collection = db["sentiment_airline_tweets"]
+    db = client[DB_NAME]
+    collection = db[MONGO_COLLECTION]
     collection.insert_one(record)
 
 
@@ -96,13 +96,14 @@ def consume_airline_tweets(kafka_topic: str = KAFKA_TOPIC_AIRLINES):
     Args:
         kafka_topic (str): The Kafka topic to consume messages from.
     """
+    _MONGO_URI = Secret.load("mongo-db-uri").get()
+    client = get_mongo_db(_MONGO_URI)
     consumer = get_kafka_consumer(kafka_topic)
-    client = get_mongo_db()
     print(f"Starting to consume messages from Kafka topic: {kafka_topic}")
 
     while True:
         poll_result = consumer.poll(timeout_ms=5000)
-        for context, messages in poll_result.items():
+        for _, messages in poll_result.items():
             for msg in messages:
                 sentiment_score = sentiment_analysis(msg.value.get("text", ""))
                 sentiment_label = label_sentiment(sentiment_score)
