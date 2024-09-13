@@ -1,9 +1,12 @@
+import sys
+sys.path.append("..")
+
 import json
 from prefect import task, flow, get_run_logger
 from kafka import KafkaProducer
 import httpx
 
-from config.kafka_config import KAFKA_SERVERS, SASL_MECHANISM, SECURITY_PROTOCOL, SASL_PLAIN_PASSWORD, SASL_PLAIN_USERNAME
+from config.kafka_config import KAFKA_SERVERS
 
 AIRLINE_URL = "http://localhost:8000"
 KAFKA_TOPIC = "raw_airline_tweet"
@@ -25,10 +28,6 @@ def publish_to_kafka(json_messages: list[dict], kafka_topic: str):
 
     producer = KafkaProducer(
         bootstrap_servers=KAFKA_SERVERS,
-        sasl_mechanism=SASL_MECHANISM,
-        security_protocol=SECURITY_PROTOCOL,
-        sasl_plain_username=SASL_PLAIN_USERNAME,
-        sasl_plain_password=SASL_PLAIN_PASSWORD,
         value_serializer=lambda v: json.dumps(v).encode('utf-8')
     )
 
@@ -76,9 +75,9 @@ def stream_airline_tweet_to_kafka(tweet_url: str, kafka_topic: str):
 
 
 if __name__ == "__main__":
-    # creates a deployment and stays running to monitor for work instructions generated on the server
-    stream_airline_tweet_to_kafka.serve(name="monitoring_airline_tweets",
-                      tags=["PyData Workshop"],
-                      parameters={"tweet_url": f"{AIRLINE_URL}/get_tweet",
-                                  "kafka_topic": KAFKA_TOPIC},
-                      interval=3)
+    # Creates a deployment and stays running to monitor for work instructions generated on the server
+    # Edit the fields appropriately
+    stream_airline_tweet_to_kafka.serve(
+        # ADD THE REQUIRED PARAMETERS HERE ...
+        )
+                      

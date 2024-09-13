@@ -6,7 +6,7 @@ from prefect import task, flow, get_run_logger
 from kafka import KafkaProducer
 import httpx
 
-from config.kafka_config import KAFKA_SERVERS, SASL_MECHANISM, SECURITY_PROTOCOL, SASL_PLAIN_PASSWORD, SASL_PLAIN_USERNAME
+from config.kafka_config import KAFKA_SERVERS
 
 AIRLINE_URL = "http://localhost:8000"
 KAFKA_TOPIC = "raw_airline_tweet"

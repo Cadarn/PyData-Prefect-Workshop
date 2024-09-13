@@ -10,12 +10,12 @@ from pymongo.server_api import ServerApi
 from config.kafka_config import KAFKA_SERVERS
 from prefect.blocks.system import Secret
 from config.mongodb_config import MONGO_URI, DB_NAME
-from e02b_sentiment_pipeline_v2 import sentiment_analysis
+from s02b_sentiment_pipeline_v2 import sentiment_analysis
 
 KAFKA_TOPIC_AIRLINES = "raw_airline_tweet"
 MONGO_COLLECTION = "sentiment_airline_tweets"
 
-# DO NOT EDIT
+
 def get_mongo_db(uri: str = MONGO_URI) -> MongoClient:
     """
     Returns a MongoDB client connected to the specified URI.
@@ -29,7 +29,7 @@ def get_mongo_db(uri: str = MONGO_URI) -> MongoClient:
     client = MongoClient(uri, server_api=ServerApi('1'))
     return client
 
-# DO NOT EDIT
+
 def get_kafka_consumer(kafka_topic: str) -> KafkaConsumer:
     """
     Returns a Kafka consumer configured for the specified topic.
@@ -48,6 +48,7 @@ def get_kafka_consumer(kafka_topic: str) -> KafkaConsumer:
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
     return consumer
+
 
 @task(name="Write Message to MongoDB", description="Writes a record to MongoDB.")
 def write_msg_to_mongo(record: dict, client: MongoClient) -> None:

@@ -13,7 +13,7 @@ nlp.add_pipe("spacytextblob")
 
 wordLemmatizer = WordNetLemmatizer()
 
-DATA_ROOT = Path("./data")
+DATA_ROOT = Path("../data")
 AIRLINE_FILE = "airline_tweets.csv"
 
 
@@ -139,10 +139,10 @@ def process_text(text: str) -> str:
     Returns:
         str: The processed text.
     """
-    text = lowercase_text(text)
+    #text = lowercase_text(text)
     text = strip_url(text)
     text = strip_user(text)
-    text = replace_emoji(text)
+    #text = replace_emoji(text)
     text = lemmatize_text(text)
     return text
 

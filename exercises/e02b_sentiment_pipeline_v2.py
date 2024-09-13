@@ -52,6 +52,8 @@ def lowercase_text(text: str) -> str:
     """
     return text.lower().strip()
 
+# <-- START HERE
+# CONVERT THESE FUNCTIONS INTO PREFECT TASKS ...
 
 def strip_url(text: str) -> str:
     """
@@ -111,7 +113,7 @@ def lemmatize_text(text: str) -> str:
     words = [wordLemmatizer.lemmatize(word) for word in text.split()]
     return ' '.join(words)
 
-
+# Now create a data processing flow using the tasks from above!
 
 def process_text(text: str) -> str:
     """
@@ -133,7 +135,9 @@ def process_text(text: str) -> str:
     logger.info(f" Clean text: {text}")
     return text
 
+# <- Compulsory edits END here, but inspect the functions below
 
+@task(name="Calculate Sentiment")
 def calc_sentiment(text: str)->float:
     """Calculate text sentiment based on the spacytextblob polarity model"""
     doc = nlp(text)
