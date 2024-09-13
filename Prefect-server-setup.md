@@ -3,7 +3,7 @@
 ## Setup the database
 Make sure you have the PostgreSQL DB running using Docker Compose
 ```
-docker-compose up --build
+docker-compose up --build --force-recreate --remove-orphans
 ```
 
 ## Setup and launch Prefect
