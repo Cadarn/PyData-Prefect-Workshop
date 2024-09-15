@@ -19,12 +19,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install pymongo
 
-# Copy the FastAPI app files
+# Copy the Streamlit app files
+COPY db_connection.py .
 COPY app.py .
 COPY Tweets.csv Tweets.csv
 
 # Expose the port the app runs on
 EXPOSE 8501
 
-# Run the FastAPI app with uvicorn
+# Run the Streamlit app
 CMD ["streamlit", "run", "app.py"]
