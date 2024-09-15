@@ -82,5 +82,5 @@ if __name__ == "__main__":
             "tweet_url": AIRLINE_URL+"/get_tweet", 
             "kafka_topic": KAFKA_TOPIC
             },
-        interval=15
+        interval=0.5
         )
