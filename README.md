@@ -2,7 +2,7 @@
 
 To participate fully in this workshop you will need the following:
 1. Clone this repo to your local machine!
-2. A local Python environment with thr required libraries installed, I recommend usinga  new, clean environment to minimise risk of library conflicts; see details below.
+2. A local Python environment with the required libraries installed, I recommend usinga  new, clean environment to minimise risk of library conflicts; see details below.
 3. Docker installed on your local machine; see details below for pulling the appropriate docker images needed in advance of the workshop.
 4. Create an account on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) - we will be using the free tier
 5. Test that we have set things up correctly.
