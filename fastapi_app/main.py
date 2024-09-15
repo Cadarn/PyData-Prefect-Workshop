@@ -35,7 +35,7 @@ last_request_time = datetime.min
 async def rate_limit_middleware(request: Request, call_next):
     global last_request_time
     now = datetime.now()
-    if now - last_request_time < timedelta(seconds=1):
+    if now - last_request_time < timedelta(seconds=0.1):
         return JSONResponse(status_code=429, content={"message": "Rate limit exceeded"})
     last_request_time = now
     response = await call_next(request)
