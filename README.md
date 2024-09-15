@@ -52,11 +52,27 @@ If you click on `Create` you will see, ![MongoDB Atlas deploy Cluster ](images/m
 Wait a few minutes for the cluster to be deployed. Once it is you should see a screen like, ![MongoDB Atlas deploy Cluster success](images/mongodb-success-cluster.png).
 
 - On the left-hand menu select `Network Access`
-- Click `Add IP Address` -> `ALLOW ACCESS FROM ANYWHERE`. If you want this to be temporary select the toggle.
+- Click `Add IP Address` -> `ALLOW ACCESS FROM ANYWHERE`. If you want this to be temporary select the toggle and chose a timeframe so that it will be available on the day of the workshop.
 - Click `Confirm`
 - On the left-hand menu, under `Deployment`, select `Database`. You should see, ![MongoDB Atlas deploy Cluster connect](images/mongodb-cluster-connect.png).
 - Click on `Connect` -> `Drivers`. Make sure `Python` is selected. Copy the connection string that should look something like, `mongodb+srv://<username>:<db_password>@prefect-tutorial.blah.blah.net/?retryWrites=true&w=majority&appName=Prefect-tutorial`
 - In the top-level of the local directory create a file called `.env` and add the following line:
-    ```MONGO_URI = <The connection string from the previous step makign sure the username and password are the correct for your database>```
+    ```MONGO_URI = <The connection string from the previous step making sure the username and password are the correct for your database>```
 
 # 5. Run a test of everything ...
+
+We have a test script to check that we have the correct libraries/modules installed and that MongoDB Atlas has been set-up correctly. Make sure that you have the correct Python environment activated; e.g. if you are a conda user you have run `conda activate pydata24_prefect`. You can then run the test script with:
+
+```python test_script.py```
+
+If eveything is working correctly you should see an output similar to the following:
+
+```
+prefect - version 3.0.1 installed
+kafka-python-ng - version 2.2.2 installed
+spacy - version 3.7.6 installed
+spacytextblob - version 4.0.0 installed
+pymongo - version 4.8.0 installed
+python-dotenv - version (not listed) installed
+Pinged your deployment. You successfully connected to MongoDB Atlas!
+```
