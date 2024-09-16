@@ -42,25 +42,36 @@ We will be using Docker to simulate several differnt data services as part of th
 
 MongoDB offers a cloud service for their document database called Atlas. You can create a free account here: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register). You should see somthing like, ![MongoDB Atlas login](images/mongodb-atlas.png)
 
-You need to create a project to hold the database we will be using. You should see something like, ![MongoDB Atlas Project](images/mongo-create-project.png). 
+You need to create a project to hold the database we will be using. You should see something like, 
+
+![MongoDB Atlas Project](images/mongo-create-project.png). 
 
 - Create a new project called `Prefect-tutorial`
 
-We then need to create a new cluster and should see a screen like, ![MongoDB Atlas Cluster](images/mongodb-create-cluster.png).
+We then need to create a new cluster and should see a screen like, 
 
-If you click on `Create` you will see, ![MongoDB Atlas deploy Cluster ](images/mongodb-deploy-cluster.png).
+![MongoDB Atlas Cluster](images/mongodb-create-cluster.png).
+
+If you click on `Create` you will see, 
+
+![MongoDB Atlas deploy Cluster ](images/mongodb-deploy-cluster.png).
 
 - Select the `M0` free tier
 - Give it the name `Prefect-tutorial`
 - Click `Create Deployment`
 - Create a database user and record your password somewhere secure as you will need this later!
 
-Wait a few minutes for the cluster to be deployed. Once it is you should see a screen like, ![MongoDB Atlas deploy Cluster success](images/mongodb-success-cluster.png).
+Wait a few minutes for the cluster to be deployed. Once it is you should see a screen like, 
+
+![MongoDB Atlas deploy Cluster success](images/mongodb-success-cluster.png).
 
 - On the left-hand menu select `Network Access`
 - Click `Add IP Address` -> `ALLOW ACCESS FROM ANYWHERE`. If you want this to be temporary select the toggle and chose a timeframe so that it will be available on the day of the workshop.
 - Click `Confirm`
-- On the left-hand menu, under `Deployment`, select `Database`. You should see, ![MongoDB Atlas deploy Cluster connect](images/mongodb-cluster-connect.png).
+- On the left-hand menu, under `Deployment`, select `Database`. You should see,
+
+![MongoDB Atlas deploy Cluster connect](images/mongodb-cluster-connect.png).
+
 - Click on `Connect` -> `Drivers`. Make sure `Python` is selected. Copy the connection string that should look something like, `mongodb+srv://<username>:<db_password>@prefect-tutorial.blah.blah.net/?retryWrites=true&w=majority&appName=Prefect-tutorial`
 - In the top-level of the local directory create a file called `.env` and add the following line:
     ```MONGO_URI = <The connection string from the previous step making sure the username and password are the correct for your database>```
