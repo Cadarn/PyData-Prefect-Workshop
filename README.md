@@ -19,6 +19,10 @@ Hopefully you are familiar with creating new Python environments using your pref
 - If you are a `poetry` user the the install requirements are captured in the `pyproject.toml` and `poetry.lock` files.
 - If you want to install using `pip` you can use the `requirements.txt` file.
 
+### 2.1 Pull the spaCy model
+During the workshop we will be using a [spaCy](https://spacy.io/models) model for sentiment analysis. This needs to be downloaded after spaCy has been installed. Once your Python enviornment is setup, activate the environment and run the following:
+        python -m spacy download en_core_web_sm
+
 ## 3. Pulling the requisite Docker images
 
 We will be using Docker to simulate several differnt data services as part of the workshop and se we need to pull some images and build some local images. If you don't have Docker installed then [refer to the Docker install instructions](https://docs.docker.com/get-started/get-docker/).
