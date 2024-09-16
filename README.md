@@ -40,30 +40,41 @@ We will be using Docker to simulate several differnt data services as part of th
 
 ## 4. Setting up a MongoDB Atlas account
 
-MongoDB offers a cloud service for their document database called Atlas. You can create a free account here: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register). You should see somthing like, ![MongoDB Atlas login](images/mongodb-atlas.png)
+MongoDB offers a cloud service for their document database called Atlas. You can create a free account here: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register). You should see something like, 
 
-You need to create a project to hold the database we will be using. You should see something like, 
+![MongoDB Atlas login](images/mongodb-atlas.png)
 
-![MongoDB Atlas Project](images/mongo-create-project.png). 
+### You need to create a project to hold the database we will be using. You should see something like, 
 
-- Create a new project called `Prefect-tutorial`
+![MongoDB Atlas Project](images/mongo-create-project.png)
 
-We then need to create a new cluster and should see a screen like, 
+### Create a new project called `Prefect-tutorial`
 
-![MongoDB Atlas Cluster](images/mongodb-create-cluster.png).
+### We then need to create a new cluster and should see a screen like, 
 
-If you click on `Create` you will see, 
+![MongoDB Atlas Cluster](images/mongodb-create-cluster.png)
 
-![MongoDB Atlas deploy Cluster ](images/mongodb-deploy-cluster.png).
+### If you click on `Create` you will see, 
+
+![MongoDB Atlas deploy Cluster ](images/mongodb-deploy-cluster.png)
 
 - Select the `M0` free tier
 - Give it the name `Prefect-tutorial`
+- Untick `Preload sample dataset` - we will create our own data
 - Click `Create Deployment`
 - Create a database user and record your password somewhere secure as you will need this later!
 
-Wait a few minutes for the cluster to be deployed. Once it is you should see a screen like, 
+### Wait a few minutes for the cluster to be deployed. Once it is you should see a screen like, 
 
-![MongoDB Atlas deploy Cluster success](images/mongodb-success-cluster.png).
+![MongoDB Atlas deploy Cluster success](images/mongodb-success-cluster.png)
+
+### Create a new database and collection. By clicking on `Add data` -> `Create Database on Atlas`,
+- Call the database; `Prefect-tutorial`
+- Call the collection; `sentiment_airline_tweets`
+
+![MongoDB Atlas deploy Cluster success](images/mongodb-new-collection.png)
+
+### Setup external network access
 
 - On the left-hand menu select `Network Access`
 - Click `Add IP Address` -> `ALLOW ACCESS FROM ANYWHERE`. If you want this to be temporary select the toggle and chose a timeframe so that it will be available on the day of the workshop.
