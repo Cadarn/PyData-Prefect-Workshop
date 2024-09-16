@@ -21,6 +21,7 @@ Hopefully you are familiar with creating new Python environments using your pref
 
 ### 2.1 Pull the spaCy model
 During the workshop we will be using a [spaCy](https://spacy.io/models) model for sentiment analysis. This needs to be downloaded after spaCy has been installed. Once your Python enviornment is setup, activate the environment and run the following:
+
         python -m spacy download en_core_web_sm
 
 ## 3. Pulling the requisite Docker images
