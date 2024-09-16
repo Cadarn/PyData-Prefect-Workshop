@@ -14,7 +14,7 @@ Make a local copy of the codebase.
 Hopefully you are familiar with creating new Python environments using your preferred environment manager, to assist you we have provided three different approaches to build an environment that will work with the the materials in the workshop. We will be using a `Python 3.12` environment, it should work with any recent version but we haven't tested it. We will be using the latest release of `Prefect` which is `v3`.
 - For `conda` and `mamba` users you can use the included `environment.yml` file to construct a new environment using. 
 
-    ```conda env create -f environment.yml```
+        conda env create -f environment.yml
 - If you are a `poetry` user the the install requirements are captured in the `pyproject.toml` and `poetry.lock` files.
 - If you want to install using `pip` you can use the `requirements.txt` file.
 
@@ -24,14 +24,15 @@ We will be using Docker to simulate several differnt data services as part of th
 
 - Make sure you have changed directory to the top-level of your clone of this repo where the `docker-compose.yml` file is.
 - Run the following command from a terminal in this directory:
-
-        docker compose --build --force-recreate --remove-orphans up
+        docker compose --build --force-recreate --remove-orphans -d up
     
     You should see an out output in the terminal that looks something like: ![docker compose up](images/docker-compose-output.png)
 
-- Run the command `docker ps` to confirm the 5 services are running
+- To confirm the 5 services are running run the command:
+        docker ps
+  
 - Stop everything until the workshop by typing:
-    ```docker compose down```
+        docker compose down
    
     You should see an out output in the terminal that indicates the services have been removed: ![docker compose down](images/docker-compose-down.png)
 
