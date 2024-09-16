@@ -7,6 +7,9 @@ To participate fully in this workshop you will need the following:
 4. Create an account on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) - we will be using the free tier
 5. Test that we have set things up correctly.
 
+## 1. Clone this repo
+Make a local copy of the codebase.
+
 ## 2. Building a new Python environment
 Hopefully you are familiar with creating new Python environments using your preferred environment manager, to assist you we have provided three different approaches to build an environment that will work with the the materials in the workshop. We will be using a `Python 3.12` environment, it should work with any recent version but we haven't tested it. We will be using the latest release of `Prefect` which is `v3`.
 - For `conda` and `mamba` users you can use the included `environment.yml` file to construct a new environment using. 
@@ -22,7 +25,7 @@ We will be using Docker to simulate several differnt data services as part of th
 - Make sure you have changed directory to the top-level of your clone of this repo where the `docker-compose.yml` file is.
 - Run the following command from a terminal in this directory:
 
-    ```docker compose --build --force-recreate --remove-orphans -d```
+        docker compose --build --force-recreate --remove-orphans up
     
     You should see an out output in the terminal that looks something like: ![docker compose up](images/docker-compose-output.png)
 
