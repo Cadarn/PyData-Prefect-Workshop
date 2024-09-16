@@ -15,6 +15,7 @@ Hopefully you are familiar with creating new Python environments using your pref
 - For `conda` and `mamba` users you can use the included `environment.yml` file to construct a new environment using. 
 
         conda env create -f environment.yml
+  
 - If you are a `poetry` user the the install requirements are captured in the `pyproject.toml` and `poetry.lock` files.
 - If you want to install using `pip` you can use the `requirements.txt` file.
 
@@ -23,15 +24,16 @@ Hopefully you are familiar with creating new Python environments using your pref
 We will be using Docker to simulate several differnt data services as part of the workshop and se we need to pull some images and build some local images. If you don't have Docker installed then [refer to the Docker install instructions](https://docs.docker.com/get-started/get-docker/).
 
 - Make sure you have changed directory to the top-level of your clone of this repo where the `docker-compose.yml` file is.
+- Create an empty `.env` file in top-level of the directory; you will edit this when setting up MongoDB Atlas.
 - Run the following command from a terminal in this directory:
+
         docker compose --build --force-recreate --remove-orphans -d up
     
     You should see an out output in the terminal that looks something like: ![docker compose up](images/docker-compose-output.png)
 
-- To confirm the 5 services are running run the command:
-        docker ps
-  
+- Run the command `docker ps` to confirm the 5 services are running
 - Stop everything until the workshop by typing:
+
         docker compose down
    
     You should see an out output in the terminal that indicates the services have been removed: ![docker compose down](images/docker-compose-down.png)
@@ -67,7 +69,7 @@ Wait a few minutes for the cluster to be deployed. Once it is you should see a s
 
 We have a test script to check that we have the correct libraries/modules installed and that MongoDB Atlas has been set-up correctly. Make sure that you have the correct Python environment activated; e.g. if you are a conda user you have run `conda activate pydata24_prefect`. You can then run the test script with:
 
-```python test_script.py```
+        python test_script.py
 
 If eveything is working correctly you should see an output similar to the following:
 
