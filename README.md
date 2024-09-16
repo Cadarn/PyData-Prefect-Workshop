@@ -27,7 +27,7 @@ We will be using Docker to simulate several differnt data services as part of th
 - Create an empty `.env` file in top-level of the directory; you will edit this when setting up MongoDB Atlas.
 - Run the following command from a terminal in this directory:
 
-        docker compose --build --force-recreate --remove-orphans -d up
+        docker compose up --build --force-recreate --remove-orphans -d
     
     You should see an out output in the terminal that looks something like: ![docker compose up](images/docker-compose-output.png)
 
